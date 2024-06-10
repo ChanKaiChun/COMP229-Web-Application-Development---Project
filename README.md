@@ -20,3 +20,4 @@ Project Proposal
 - Challenges (Optional)
   -
   VISA Developer API integration (testing stage only)
+    - If the challenge fails, the price will be placed on the system directly without verify
