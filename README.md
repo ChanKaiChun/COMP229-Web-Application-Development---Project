@@ -1,5 +1,7 @@
 # COMP229-Web-Application-Development---Project
 COMP229 – Web Application Development
+Tsz Fai Lau 301352339
+Kai Chun Chan 301345850
 
 Project Proposal
 - The project description:
