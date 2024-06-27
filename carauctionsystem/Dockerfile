@@ -5,5 +5,5 @@ COPY src ./src
 RUN mvn package
 
 FROM openjdk:21-slim
-COPY --from=build target/my-app-1.0.0.jar my-app-1.0.0.jar
-ENTRYPOINT ["java","-jar","my-app-1.0.0.jar"]
+COPY --from=build target/carauctionsystem-0.0.1-SNAPSHOT.jar carauctionsystem-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","carauctionsystem-0.0.1-SNAPSHOT.jar"]
