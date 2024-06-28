@@ -19,6 +19,11 @@ public class AuctionController {
         return ResponseEntity.ok().body(auctionService.getAuctions());
     }
 
+    @GetMapping
+    public ResponseEntity<Auction> getAuction(@RequestParam String auctionId) {
+        return ResponseEntity.ok().body(auctionService.getAuction(auctionId));
+    }
+
     @PostMapping
     public ResponseEntity<?> createAuction(@Valid @RequestBody Auction auction) {
         auctionService.createAuction(auction);

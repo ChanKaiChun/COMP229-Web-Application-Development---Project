@@ -15,7 +15,7 @@ import java.util.Date;
 @Document
 public class Users {
     @Id
-    private String id;
+    private Integer id;
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")

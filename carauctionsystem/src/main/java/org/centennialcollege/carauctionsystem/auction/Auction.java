@@ -2,6 +2,7 @@ package org.centennialcollege.carauctionsystem.auction;
 
 import lombok.Data;
 import org.centennialcollege.carauctionsystem.users.Users;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
@@ -9,7 +10,8 @@ import java.time.Instant;
 @Data
 @Document
 public class Auction {
-    private String id;
+    @Id
+    private Integer id;
     private String carModel;
     private String carMake;
     private String carYear;
