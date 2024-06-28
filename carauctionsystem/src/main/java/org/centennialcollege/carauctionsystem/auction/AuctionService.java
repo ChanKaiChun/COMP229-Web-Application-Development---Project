@@ -15,7 +15,7 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
-    public Auction getAuction(String id) {
+    public Auction getAuction(Integer id) {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
     }
 

@@ -20,7 +20,7 @@ public class AuctionController {
     }
 
     @GetMapping
-    public ResponseEntity<Auction> getAuction(@RequestParam String auctionId) {
+    public ResponseEntity<Auction> getAuction(@RequestParam Integer auctionId) {
         return ResponseEntity.ok().body(auctionService.getAuction(auctionId));
     }
 
