@@ -7,7 +7,7 @@ Firstly, please add the database config file in `/carauctionsystem/src/main/reso
 
 API document:
 - 
-- Please access `http://localhost:8080/swagger-ui/index.html` to access the API document
+- Please access `http://localhost:8080/swagger-ui/index.html` to access the API document after start the backend
 
 Remind:
 - 
