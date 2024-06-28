@@ -1,4 +1,4 @@
-package org.centennialcollege.carauctionsystem.users;
+package org.centennialcollege.carauctionsystem.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
-import java.util.Date;
 
 @Data
 @Document

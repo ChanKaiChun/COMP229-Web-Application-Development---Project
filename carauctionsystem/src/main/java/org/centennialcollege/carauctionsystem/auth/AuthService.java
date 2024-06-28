@@ -1,8 +1,5 @@
 package org.centennialcollege.carauctionsystem.auth;
 
-import org.centennialcollege.carauctionsystem.users.UserStatus;
-import org.centennialcollege.carauctionsystem.users.Users;
-import org.centennialcollege.carauctionsystem.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 @Service
 public class AuthService implements UserDetailsService {

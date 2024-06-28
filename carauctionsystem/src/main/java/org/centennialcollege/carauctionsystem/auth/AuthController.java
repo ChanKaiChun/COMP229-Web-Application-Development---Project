@@ -1,9 +1,7 @@
 package org.centennialcollege.carauctionsystem.auth;
 
 import jakarta.validation.Valid;
-import org.centennialcollege.carauctionsystem.common.GeneralResponse;
 import org.centennialcollege.carauctionsystem.config.JwtUtil;
-import org.centennialcollege.carauctionsystem.users.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;

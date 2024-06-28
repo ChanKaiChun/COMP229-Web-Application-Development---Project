@@ -1,4 +1,4 @@
-package org.centennialcollege.carauctionsystem.users;
+package org.centennialcollege.carauctionsystem.auth;
 
 public enum UserStatus {
     Active,
