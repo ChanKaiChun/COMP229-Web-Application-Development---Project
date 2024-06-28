@@ -1,4 +1,4 @@
-package org.centennialcollege.carauctionsystem.auth;
+package org.centennialcollege.carauctionsystem.users;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

@@ -1,4 +1,4 @@
-package org.centennialcollege.carauctionsystem.auth;
+package org.centennialcollege.carauctionsystem.users;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
