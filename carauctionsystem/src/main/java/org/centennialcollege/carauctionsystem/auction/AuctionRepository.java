@@ -1,4 +1,7 @@
 package org.centennialcollege.carauctionsystem.auction;
 
-public interface AuctionRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface AuctionRepository extends MongoRepository<Auction, String> {
+    Auction findByCarModel(String carModel);
 }

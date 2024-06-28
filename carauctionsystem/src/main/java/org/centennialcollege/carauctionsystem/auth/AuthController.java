@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -25,19 +28,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody Users user, BindingResult result) {
-        GeneralResponse response = new GeneralResponse();
+        Map<String, String> response = new HashMap<>();
         if (result.hasErrors()) {
             if(result.getFieldError()!=null){
-                response.setMessage("Validation error: " + result.getFieldError().getDefaultMessage());
+                response.put("message", "Validation error: " + result.getFieldError().getDefaultMessage());
                 return ResponseEntity.badRequest().body(response);
             }
         }
         try{
             authService.registerUser(user);
-            response.setMessage("User registered successfully");
+            response.put("message", "User registered successfully");
             return ResponseEntity.ok().body(response);
         } catch (DuplicateKeyException e){
-            response.setMessage("Email is already in use");
+            response.put("message", "Email is already in use");
             return ResponseEntity.badRequest().body(response);
         }
     }
