@@ -1,7 +1,5 @@
 package org.centennialcollege.carauctionsystem.auth;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,8 +13,6 @@ import java.util.ArrayList;
 
 @Service
 public class AuthService implements UserDetailsService {
-
-    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Autowired
     UsersRepository usersRepository;

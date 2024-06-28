@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
 public class JwtUtil {
 
-    private SecretKey secretKey = Jwts.SIG.HS256.key().build();
+    private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
 
     public String generateToken(String email) {
         return Jwts.builder()
