@@ -11,7 +11,7 @@ import java.util.List;
 public class BidController {
 
     @GetMapping("/auction/{auctionId}")
-    public ResponseEntity<List<Bid>> getAllBidsByAuction(@PathVariable Integer auctionId) {
+    public ResponseEntity<List<Bid>> getAllBidsByAuction(@PathVariable String auctionId) {
         return ResponseEntity.ok().body(new ArrayList<>());
     }
 
