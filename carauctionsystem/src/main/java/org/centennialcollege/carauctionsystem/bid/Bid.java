@@ -11,9 +11,9 @@ import java.time.Instant;
 public class Bid {
 
     @Id
-    private Integer id;
-    private Integer auctionId;
-    private Integer bidderId;
+    private String id;
+    private String auctionId;
+    private String bidderId;
     private Double amount;
     private Instant bidTime;
 }

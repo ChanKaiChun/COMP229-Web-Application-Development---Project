@@ -10,7 +10,7 @@ import java.time.Instant;
 @Document
 public class Auction {
     @Id
-    private Integer id;
+    private String id;
     private String carModel;
     private String carMake;
     private String carYear;

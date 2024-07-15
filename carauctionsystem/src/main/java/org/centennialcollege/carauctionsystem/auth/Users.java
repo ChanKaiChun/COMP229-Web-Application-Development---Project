@@ -14,7 +14,7 @@ import java.time.Instant;
 @Document
 public class Users {
     @Id
-    private Integer id;
+    private String id;
 
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
