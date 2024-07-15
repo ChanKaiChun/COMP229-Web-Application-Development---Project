@@ -21,7 +21,7 @@ public class AuthService implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     public void registerUser(Users user) throws DuplicateKeyException {
-        passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(UserStatus.Active);
         user.setLastLogin(Instant.now());
         usersRepository.save(user);
@@ -29,6 +29,8 @@ public class AuthService implements UserDetailsService {
 
     public UserDetails login(LoginRequest request) throws UsernameNotFoundException {
         Users user = usersRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        System.out.println(user.getPassword());
+        System.out.println(request.getPassword());
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Wrong password");
         }

@@ -18,7 +18,7 @@ public class Auction {
     private Integer carMileage;
     private String carVin;
     private String description;
-    private Integer ownerId;
+    private String ownerId;
     private Double startPrice;
     private Double reservePrice;
     private Double currentPrice;
