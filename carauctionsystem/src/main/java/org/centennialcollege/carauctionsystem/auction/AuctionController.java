@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,21 @@ public class AuctionController {
     @GetMapping
     public ResponseEntity<List<Auction>> getAuctions() {
         return ResponseEntity.ok().body(auctionService.getAuctions());
+    }
+
+    @GetMapping("/live")
+    public ResponseEntity<List<Auction>> getLiveAuctions() {
+        return ResponseEntity.ok().body(auctionService.getLiveAuctions());
+    }
+
+    @GetMapping("/featured")
+    public ResponseEntity<List<Auction>> getFeatureAuctions() {
+        return ResponseEntity.ok().body(auctionService.getFeatureAuctions());
+    }
+
+    @GetMapping("/passed")
+    public ResponseEntity<List<Auction>> getPassedAuctions() {
+        return ResponseEntity.ok().body(auctionService.getPassedAuctions());
     }
 
     @GetMapping("/{auctionId}")

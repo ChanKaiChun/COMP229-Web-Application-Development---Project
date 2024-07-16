@@ -20,6 +20,18 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
+    public List<Auction> getFeatureAuctions(){
+        return auctionRepository.findAllByStartTimeAfter(Instant.now());
+    }
+
+    public List<Auction> getLiveAuctions(){
+        return auctionRepository.findAllByStartTimeAfterAndEndTimeBefore(Instant.now(), Instant.now());
+    }
+
+    public List<Auction> getPassedAuctions(){
+        return auctionRepository.findAllByEndTimeBefore(Instant.now());
+    }
+
     public Auction getAuction(String id) {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
     }
