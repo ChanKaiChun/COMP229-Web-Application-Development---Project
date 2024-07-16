@@ -1,13 +1,14 @@
 import axios from 'axios';
+const API_URL = import.meta.env.VITE_API_URL;
 
-const API_URL = 'http://localhost:8081/auth'; // Update the URL based on your backend configuration
-
+console.log('API_URL:', API_URL); // This should log the correct URL
+console.log(import.meta.env.VITE_API_URL);
 const register = (user) => {
-    return axios.post(`${API_URL}/register`, user);
+    return axios.post(`${API_URL}/auth/register`, user);
 };
 
 const login = (user) => {
-    return axios.post(`${API_URL}/login`, user);
+    return axios.post(`${API_URL}/auth/login`, user);
 };
 
 const authService = {
