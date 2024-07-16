@@ -1,12 +1,14 @@
 package org.centennialcollege.carauctionsystem.auction;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
 @Data
+@NoArgsConstructor
 @Document
 public class Auction {
     @Id
@@ -24,6 +26,20 @@ public class Auction {
     private Double currentPrice;
     private Instant startTime;
     private Instant endTime;
-    private Integer winnerId;
+    private String winnerId;
     private Instant createdDate;
+
+    public Auction(AuctionCreateModel model) {
+        this.carModel = model.getCarModel();
+        this.carMake = model.getCarMake();
+        this.carYear = model.getCarYear();
+        this.carColor = model.getCarColor();
+        this.carMileage = model.getCarMileage();
+        this.carVin = model.getCarVin();
+        this.description = model.getDescription();
+        this.startPrice = model.getStartPrice();
+        this.reservePrice = model.getReservePrice();
+        this.startTime = model.getStartTime();
+        this.endTime = model.getEndTime();
+    }
 }

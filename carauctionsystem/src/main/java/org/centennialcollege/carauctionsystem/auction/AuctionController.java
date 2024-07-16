@@ -3,6 +3,8 @@ package org.centennialcollege.carauctionsystem.auction;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +27,10 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createAuction(@Valid @RequestBody Auction auction) {
-        auctionService.createAuction(auction);
+    public ResponseEntity<?> createAuction(@Valid @RequestBody AuctionCreateModel model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Auction auction = new Auction(model);
+        auctionService.createAuction(auction, user.getUsername());
         return ResponseEntity.accepted().build();
     }
 

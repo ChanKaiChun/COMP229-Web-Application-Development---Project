@@ -1,6 +1,9 @@
 package org.centennialcollege.carauctionsystem.auction;
 
+import org.centennialcollege.carauctionsystem.auth.Users;
+import org.centennialcollege.carauctionsystem.auth.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -10,6 +13,8 @@ import java.util.List;
 public class AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
+    @Autowired
+    private UsersRepository usersRepository;
 
     public List<Auction> getAuctions() {
         return auctionRepository.findAll();
@@ -19,7 +24,12 @@ public class AuctionService {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
     }
 
-    public void createAuction(Auction auction) {
+    public void createAuction(Auction auction, String email) {
+        Users user = usersRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Current user is not exist"));
+
+        auction.setCurrentPrice(auction.getStartPrice());
+        auction.setCreatedDate(Instant.now());
+        auction.setOwnerId(user.getId());
         auctionRepository.save(auction);
     }
 
