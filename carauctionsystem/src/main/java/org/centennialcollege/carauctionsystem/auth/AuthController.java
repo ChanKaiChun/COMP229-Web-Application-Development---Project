@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,9 +52,14 @@ public class AuthController {
             return ResponseEntity.badRequest().body(response);
         }
         try{
-            UserDetails details = authService.login(request);
+            Users user = authService.login(request);
+            UserDetails details = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
             String jwt = jwtUtil.generateToken(details.getUsername());
             response.setToken(jwt);
+            response.setEmail(user.getEmail());
+            response.setFirstName(user.getFirstName());
+            response.setLastName(user.getLastName());
+            response.setEmail(details.getUsername());
             return ResponseEntity.ok().body(response);
         } catch (Exception e){
             response.setError(e.getMessage());

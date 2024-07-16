@@ -27,17 +27,15 @@ public class AuthService implements UserDetailsService {
         usersRepository.save(user);
     }
 
-    public UserDetails login(LoginRequest request) throws UsernameNotFoundException {
+    public Users login(LoginRequest request) throws UsernameNotFoundException {
         Users user = usersRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        System.out.println(user.getPassword());
-        System.out.println(request.getPassword());
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new BadCredentialsException("Wrong password");
         }
         if(user.getStatus() != UserStatus.Active) {
             throw new UsernameNotFoundException("User is not active");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+        return user;
     }
 
     @Override
