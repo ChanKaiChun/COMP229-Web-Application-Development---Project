@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
+// src/ProtectedRoute.jsx
+import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useContext } from 'react';
 import { AuthContext } from "../contexts/AuthContext.jsx";
 
-
 const ProtectedRoute = ({ children }) => {
-    const { user } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
 
-    if (!user) {
+    if (!token) {
         return <Navigate to="/account" />;
     }
 
