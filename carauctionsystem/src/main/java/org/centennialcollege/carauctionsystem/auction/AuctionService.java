@@ -25,7 +25,7 @@ public class AuctionService {
     }
 
     public List<Auction> getLiveAuctions(){
-        return auctionRepository.findAllByStartTimeAfterAndEndTimeBefore(Instant.now(), Instant.now());
+        return auctionRepository.findAllByStartTimeBeforeAndEndTimeAfter(Instant.now(), Instant.now());
     }
 
     public List<Auction> getPassedAuctions(){
