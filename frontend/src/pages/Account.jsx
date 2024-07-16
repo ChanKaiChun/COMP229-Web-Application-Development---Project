@@ -1,45 +1,56 @@
-import React, { useState, useContext } from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { AuthContext } from '../contexts/AuthContext.jsx';
 import authService from "../services/authService.js";
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-    // State variables
+    const navigate = useNavigate(); // Move useNavigate inside the component
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [message, setMessage] = useState('');
-    const { login } = useContext(AuthContext);
+    const { token, login } = useContext(AuthContext);
 
-    // Toggle between Login and Register form
     const toggleForm = () => {
         setIsLogin(!isLogin);
     };
 
-    // Handle registration
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const response = await authService.register({ email, password, firstName, lastName });
             setMessage(response.data.message);
         } catch (error) {
-            setMessage(error.response.data.message);
+            setMessage(error.response ? error.response.data.message : 'An unexpected error occurred');
         }
     };
 
-    // Handle login
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await authService.login({ email, password });
-            localStorage.setItem('token', response.data.token);
-            login(response.data.token);
-            setMessage('Login successful');
+            if (response.data && response.data.token) {
+                login(response.data.token, {
+                    email: response.data.email,
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                }); // Pass user info to AuthContext
+                navigate('/user-info'); // Redirect to UserInfo page
+            } else {
+                setMessage('No token received');
+            }
         } catch (error) {
-            setMessage(error.response.data.error);
+            setMessage(error.response ? error.response.data.message : 'An unexpected error occurred');
         }
     };
+
+    useEffect(() => {
+        if(token){
+            navigate('/user-info');
+        }
+    }, []);
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
