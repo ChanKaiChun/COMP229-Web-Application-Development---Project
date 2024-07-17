@@ -3,6 +3,7 @@ package org.centennialcollege.carauctionsystem.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -42,6 +43,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests((authz) -> authz
                     .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll() // For swagger
                     .requestMatchers("/auth/login/**", "/auth/register/**").permitAll() // For register and login
+                    .requestMatchers(HttpMethod.GET, "/auction/**").permitAll()
                     .anyRequest().authenticated()
             ).sessionManagement((management) -> management
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
