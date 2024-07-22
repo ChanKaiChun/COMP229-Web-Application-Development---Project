@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { TfiClose } from "react-icons/tfi";
 import logo from "../assets/img/AA.png";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext.jsx"; // Import AuthContext
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
+  const { token } = useContext(AuthContext); // Access the token from AuthContext
 
   const handleNav = () => {
     setNav(!nav);
@@ -33,6 +35,11 @@ const Navbar = () => {
                 <li className="py-1 px-3 hover:rounded hover:bg-black/50">
                   <Link to="/sell-car">Sell a Car</Link>
                 </li>
+                {token && ( // Conditionally render the button
+                    <li className="py-1 px-3 hover:rounded hover:bg-black/50">
+                      <Link to="/create-auction">Create Auction</Link>
+                    </li>
+                )}
               </ul>
             </div>
             <div className="hidden lg:inline">
@@ -41,7 +48,7 @@ const Navbar = () => {
                   <Link to="/account">Account</Link>
                 </li>
                 <li onClick={handleNav} className="py-1 px-3 hover:rounded hover:bg-black/50">
-                Menu
+                  Menu
                 </li>
               </ul>
             </div>
@@ -90,8 +97,13 @@ const Navbar = () => {
                 <Link to="/shop" onClick={handleNav}>Shop</Link>
               </li>
               <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/account" onClick={handleNav}>Account</Link> {/* Updated link */}
+                <Link to="/account" onClick={handleNav}>Account</Link>
               </li>
+              {token && ( // Conditionally render the button in mobile menu
+                  <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
+                    <Link to="/create-auction" onClick={handleNav}>Create Auction</Link>
+                  </li>
+              )}
             </ul>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const LiveAuction = () => {
     const [auctions, setAuctions] = useState([]);
@@ -61,9 +62,9 @@ const LiveAuction = () => {
                                 </div>
                                 <p className="mt-1 text-sm text-gray-400">{auction.location}</p>
                             </div>
-                            <button className="mt-4 bg-white font-semibold text-orange-500 py-2 px-4 rounded transition duration-300 hover:bg-orange-500 hover:text-white">
+                            <Link to={`/auction/${auction.id}`} className="mt-4 bg-white font-semibold text-orange-500 py-2 px-4 rounded transition duration-300 hover:bg-orange-500 hover:text-white">
                                 View Details
-                            </button>
+                            </Link>
                         </div>
                         <img src={`path/to/car/images/${auction.carVin}.jpg`} alt={auction.carModel} className="w-1/2 h-80 object-cover" />
                     </div>
