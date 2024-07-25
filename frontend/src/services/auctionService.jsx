@@ -1,35 +1,34 @@
 // src/services/auctionService.jsx
 import axios from 'axios';
-const API_URL = import.meta.env.VITE_API_URL;
 
 // Define the methods to interact with auction-related API endpoints
 
 const getLiveAuctions = () => {
-    return axios.get(`${API_URL}/auction/live`);
+    return axios.get(`/api/auction/live`);
 };
 
 const getFeaturedAuctions = () => {
-    return axios.get(`${API_URL}/auction/featured`);
+    return axios.get(`/api/auction/featured`);
 };
 
 const getPassedAuctions = () => {
-    return axios.get(`${API_URL}/auction/passed`);
+    return axios.get(`/api/auction/passed`);
 };
 
 const getAuctionById = (auctionId) => {
-    return axios.get(`${API_URL}/auction/${auctionId}`);
+    return axios.get(`/api/auction/${auctionId}`);
 };
 
 const getOwnerAuctions = (auctionId) => {
-    return axios.get(`${API_URL}/auction/owner/${auctionId}`);
+    return axios.get(`/api/auction/owner/${auctionId}`);
 };
 
 const createAuction = (auctionData) => {
-    return axios.post(`${API_URL}/auction`, auctionData);
+    return axios.post(`/api/auction`, auctionData);
 };
 
 const updateAuction = (auctionId, auctionData) => {
-    return axios.put(`${API_URL}/auction/${auctionId}`, auctionData);
+    return axios.put(`/api/auction/${auctionId}`, auctionData);
 };
 
 // Export all the methods
