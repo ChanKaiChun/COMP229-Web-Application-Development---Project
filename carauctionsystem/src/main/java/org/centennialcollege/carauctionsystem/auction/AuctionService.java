@@ -69,4 +69,10 @@ public class AuctionService {
         auctionData.setWinnerId(auction.getWinnerId());
         auctionRepository.save(auctionData);
     }
+
+    public AuctionOwnerResponse getAuctionUser(String id) {
+        Auction auction = auctionRepository.findById(id).orElseThrow(()->new RuntimeException("Auction not found"));
+        Users auctionOwner = usersRepository.findByEmail(auction.getOwnerId()).orElseThrow(()->new RuntimeException("User not found"));
+        return new AuctionOwnerResponse(auctionOwner);
+    }
 }
