@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class AuctionCreateModel {
+public class AuctionCreateRequest {
     private String carModel;
     private String carMake;
     private String carYear;

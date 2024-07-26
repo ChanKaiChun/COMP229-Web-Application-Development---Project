@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -43,7 +42,7 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createAuction(@Valid @RequestBody AuctionCreateModel model) {
+    public ResponseEntity<?> createAuction(@Valid @RequestBody AuctionCreateRequest model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Auction auction = new Auction(model);
         auctionService.createAuction(auction, user.getUsername());

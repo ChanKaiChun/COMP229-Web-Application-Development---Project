@@ -2,6 +2,7 @@ package org.centennialcollege.carauctionsystem.auction;
 
 import org.centennialcollege.carauctionsystem.auth.Users;
 import org.centennialcollege.carauctionsystem.auth.UsersRepository;
+import org.centennialcollege.carauctionsystem.bid.BidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class AuctionService {
     private AuctionRepository auctionRepository;
     @Autowired
     private UsersRepository usersRepository;
+    @Autowired
+    private BidRepository bidRepository;
 
     public List<Auction> getAuctions() {
         return auctionRepository.findAll();
@@ -29,7 +32,11 @@ public class AuctionService {
     }
 
     public List<Auction> getPassedAuctions(){
-        return auctionRepository.findAllByEndTimeBefore(Instant.now());
+        List<Auction> auctions = auctionRepository.findAllByEndTimeBefore(Instant.now());
+        auctions.forEach(auction -> {
+            
+        });
+        return auctions;
     }
 
     public Auction getAuction(String id) {

@@ -1,4 +1,7 @@
 package org.centennialcollege.carauctionsystem.bid;
 
-public interface BidRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface BidRepository extends MongoRepository<Bid, String> {
+    public Bid findFirstByAuctionIdOrderByBidTimeDesc(String auctionId);
 }

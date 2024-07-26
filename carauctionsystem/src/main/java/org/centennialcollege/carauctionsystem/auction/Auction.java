@@ -29,7 +29,7 @@ public class Auction {
     private String winnerId;
     private Instant createdDate;
 
-    public Auction(AuctionCreateModel model) {
+    public Auction(AuctionCreateRequest model) {
         this.carModel = model.getCarModel();
         this.carMake = model.getCarMake();
         this.carYear = model.getCarYear();
