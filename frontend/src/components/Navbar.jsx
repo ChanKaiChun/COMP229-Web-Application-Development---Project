@@ -40,6 +40,11 @@ const Navbar = () => {
                       <Link to="/create-auction">Create Auction</Link>
                     </li>
                 )}
+                {token && ( // Conditionally render the button
+                    <li className="py-1 px-3 hover:rounded hover:bg-black/50">
+                      <Link to="/update-auction">Update Auction</Link>
+                    </li>
+                )}
               </ul>
             </div>
             <div className="hidden lg:inline">

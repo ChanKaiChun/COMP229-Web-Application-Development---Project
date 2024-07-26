@@ -27,7 +27,7 @@ const createAuction = (auctionData) => {
     return axios.post(`/api/auction`, auctionData);
 };
 
-const updateAuction = (auctionId, auctionData) => {
+const updateAuctions = (auctionId, auctionData) => {
     return axios.put(`/api/auction/${auctionId}`, auctionData);
 };
 
@@ -39,7 +39,7 @@ const auctionService = {
     getAuctionById,
     getOwnerAuctions,
     createAuction,
-    updateAuction,
+    updateAuctions,
 };
 
 export default auctionService;
