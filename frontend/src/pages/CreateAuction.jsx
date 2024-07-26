@@ -1,204 +1,167 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for making HTTP requests
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { AuthContext } from '../contexts/AuthContext';
 
 const CreateAuction = () => {
-    // State for form fields
+    const { token } = useContext(AuthContext);
     const [carModel, setCarModel] = useState('');
     const [carMake, setCarMake] = useState('');
     const [carYear, setCarYear] = useState('');
     const [carColor, setCarColor] = useState('');
-    const [carMileage, setCarMileage] = useState(0);
+    const [carMileage, setCarMileage] = useState('');
     const [carVin, setCarVin] = useState('');
     const [description, setDescription] = useState('');
-    const [startPrice, setStartPrice] = useState(0);
-    const [reservePrice, setReservePrice] = useState(0);
+    const [startPrice, setStartPrice] = useState('');
+    const [reservePrice, setReservePrice] = useState('');
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
-    const [message, setMessage] = useState('');
-    const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    // Handle form submission
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setMessage('');
-        setError('');
 
-        try {
-            // API call to create auction
-            const response = await axios.post('api/auction', {
-                carModel,
-                carMake,
-                carYear,
-                carColor,
-                carMileage: Number(carMileage), // Ensure the value is a number
-                carVin,
-                description,
-                startPrice: Number(startPrice), // Ensure the value is a number
-                reservePrice: Number(reservePrice), // Ensure the value is a number
-                startTime,
-                endTime,
-            });
-
-            // Log response for debugging
-            console.log('Response from server:', response.data);
-
-            // Handle success with response data
-            setMessage(`Auction created successfully! Response: ${response.data.message}`);
-
-            // Clear the form
-            setCarModel('');
-            setCarMake('');
-            setCarYear('');
-            setCarColor('');
-            setCarMileage(0);
-            setCarVin('');
-            setDescription('');
-            setStartPrice(0);
-            setReservePrice(0);
-            setStartTime('');
-            setEndTime('');
-        } catch (err) {
-            // Log error for debugging
-            console.error('Error creating auction:', err);
-
-            // Handle error
-            setError('An error occurred while creating the auction. Please try again.');
-            if (err.response) {
-                console.error('Error response from server:', err.response.data);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
             }
-        }
+        };
+
+        const formatDate = (dateString) => {
+            const date = new Date(dateString);
+            return date.toISOString(); // Convert to ISO 8601 format
+        };
+
+        const newAuction = {
+            carModel,
+            carMake,
+            carYear,
+            carColor,
+            carMileage: parseInt(carMileage, 10),
+            carVin,
+            description,
+            startPrice: parseFloat(startPrice),
+            reservePrice: parseFloat(reservePrice),
+            startTime: formatDate(startTime),
+            endTime: formatDate(endTime)
+        };
+
+        axios.post('/api/auction', newAuction, config)
+            .then(response => {
+                setSuccessMessage('Auction created successfully!');
+                setErrorMessage(''); // Clear any previous error messages
+                // Optionally redirect or clear form fields here
+            })
+            .catch(error => {
+                setErrorMessage('There was an error creating the auction!');
+                setSuccessMessage(''); // Clear any previous success messages
+            });
     };
 
     return (
-        <div className="p-8 mt-16 bg-gray-900 text-white">
-            <h1 className="text-4xl font-bold mb-6">Create Auction</h1>
-            <form onSubmit={handleSubmit} className="max-w-lg mx-auto bg-gray-800 p-6 rounded shadow-md">
-                <div className="mb-4">
-                    <label htmlFor="carModel" className="block text-sm font-medium mb-1">Car Model</label>
-                    <input
-                        type="text"
-                        id="carModel"
-                        value={carModel}
-                        onChange={(e) => setCarModel(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="carMake" className="block text-sm font-medium mb-1">Car Make</label>
-                    <input
-                        type="text"
-                        id="carMake"
-                        value={carMake}
-                        onChange={(e) => setCarMake(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="carYear" className="block text-sm font-medium mb-1">Car Year</label>
-                    <input
-                        type="text"
-                        id="carYear"
-                        value={carYear}
-                        onChange={(e) => setCarYear(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="carColor" className="block text-sm font-medium mb-1">Car Color</label>
-                    <input
-                        type="text"
-                        id="carColor"
-                        value={carColor}
-                        onChange={(e) => setCarColor(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="carMileage" className="block text-sm font-medium mb-1">Car Mileage</label>
-                    <input
-                        type="number"
-                        id="carMileage"
-                        value={carMileage}
-                        onChange={(e) => setCarMileage(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="carVin" className="block text-sm font-medium mb-1">Car VIN</label>
-                    <input
-                        type="text"
-                        id="carVin"
-                        value={carVin}
-                        onChange={(e) => setCarVin(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="description" className="block text-sm font-medium mb-1">Description</label>
-                    <textarea
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        rows="4"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="startPrice" className="block text-sm font-medium mb-1">Start Price</label>
-                    <input
-                        type="number"
-                        id="startPrice"
-                        value={startPrice}
-                        onChange={(e) => setStartPrice(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="reservePrice" className="block text-sm font-medium mb-1">Reserve Price</label>
-                    <input
-                        type="number"
-                        id="reservePrice"
-                        value={reservePrice}
-                        onChange={(e) => setReservePrice(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="startTime" className="block text-sm font-medium mb-1">Start Time</label>
-                    <input
-                        type="datetime-local"
-                        id="startTime"
-                        value={startTime}
-                        onChange={(e) => setStartTime(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="endTime" className="block text-sm font-medium mb-1">End Time</label>
-                    <input
-                        type="datetime-local"
-                        id="endTime"
-                        value={endTime}
-                        onChange={(e) => setEndTime(e.target.value)}
-                        className="w-full p-2 border rounded bg-gray-700 text-white"
-                        required
-                    />
-                </div>
-                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded">
+        <div className="p-8 mt-16 bg-black text-white">
+            <h1 className="text-4xl font-bold mb-4 text-orange-500">Create Auction</h1>
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                <input
+                    type="text"
+                    placeholder="Car Model"
+                    value={carModel}
+                    onChange={(e) => setCarModel(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Car Make"
+                    value={carMake}
+                    onChange={(e) => setCarMake(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Car Year"
+                    value={carYear}
+                    onChange={(e) => setCarYear(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Car Color"
+                    value={carColor}
+                    onChange={(e) => setCarColor(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="number"
+                    placeholder="Car Mileage"
+                    value={carMileage}
+                    onChange={(e) => setCarMileage(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="text"
+                    placeholder="Car VIN"
+                    value={carVin}
+                    onChange={(e) => setCarVin(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <textarea
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                ></textarea>
+                <input
+                    type="number"
+                    placeholder="Start Price"
+                    value={startPrice}
+                    onChange={(e) => setStartPrice(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="number"
+                    placeholder="Reserve Price"
+                    value={reservePrice}
+                    onChange={(e) => setReservePrice(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="datetime-local"
+                    placeholder="Start Time"
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <input
+                    type="datetime-local"
+                    placeholder="End Time"
+                    value={endTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    className="p-2 border rounded bg-gray-700 text-white"
+                    required
+                />
+                <button
+                    type="submit"
+                    className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
+                >
                     Create Auction
                 </button>
-                {message && <p className="mt-4 text-green-400">{message}</p>}
-                {error && <p className="mt-4 text-red-400">{error}</p>}
+                {successMessage && (
+                    <p className="mt-4 text-green-500">{successMessage}</p>
+                )}
+                {errorMessage && (
+                    <p className="mt-4 text-red-500">{errorMessage}</p>
+                )}
             </form>
         </div>
     );

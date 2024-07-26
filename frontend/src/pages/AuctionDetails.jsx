@@ -11,6 +11,11 @@ const AuctionDetails = () => {
     const [owner, setOwner] = useState({});
 
     useEffect(() => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
         // Fetch auction details
         axios.get(`/api/auction/${auctionId}`)
             .then(response => {
@@ -19,6 +24,7 @@ const AuctionDetails = () => {
             .catch(error => {
                 console.error("There was an error fetching the auction details!", error);
             });
+
 
         // Fetch existing bids
         axios.get(`/api/bid/auction/${auctionId}`)
@@ -49,6 +55,7 @@ const AuctionDetails = () => {
             .catch(error => {
                 console.error("There was an error fetching the auction owner information!", error);
             });
+
     }, [auctionId]);
 
     const handleBidChange = (e) => {
@@ -67,6 +74,8 @@ const AuctionDetails = () => {
                 console.error("There was an error submitting the bid!", error);
             });
     };
+
+    const minBidAmount = auction.currentPrice ? auction.currentPrice + 1 : 0;
 
     return (
         <div className="p-8 mt-16 bg-black text-white">
@@ -95,7 +104,7 @@ const AuctionDetails = () => {
                                 type="number"
                                 value={bidAmount}
                                 onChange={handleBidChange}
-                                min={auction.currentPrice + 1} // Minimum bid is one more than the current price
+                                min={minBidAmount} // Set the minimum bid amount
                                 className="w-full p-2 border rounded bg-gray-700 text-white"
                                 required
                             />
