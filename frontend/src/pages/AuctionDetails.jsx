@@ -71,14 +71,20 @@ const AuctionDetails = () => {
     return (
         <div className="p-8 mt-16 bg-black text-white">
             <div className="flex flex-col lg:flex-row">
-                <img src={auction.imageUrl} alt={auction.title} className="w-full lg:w-1/2 h-80 object-cover" />
+                <img src={auction.imageUrl} alt={auction.carModel} className="w-full lg:w-1/2 h-80 object-cover" />
                 <div className="p-4 lg:w-1/2 flex flex-col justify-between">
-                    <h1 className="text-4xl font-bold mb-4 text-orange-500">{auction.title}</h1>
+                    <h1 className="text-4xl font-bold mb-4 text-orange-500">{auction.carModel} - {auction.carMake}</h1>
                     <p className="mb-4">{auction.description}</p>
-                    <p className="text-lg font-semibold mb-4">Starting Price: CAD ${auction.startingPrice}</p>
+                    <p className="text-lg font-semibold mb-4">Starting Price: CAD ${auction.startPrice}</p>
                     <p className="mb-4">Current Highest Bid: CAD ${auction.currentPrice}</p>
-                    <p className="mb-4">Location: {auction.location}</p>
+                    <p className="mb-4">Reserve Price: CAD ${auction.reservePrice}</p>
+                    <p className="mb-4">Car Year: {auction.carYear}</p>
+                    <p className="mb-4">Car Color: {auction.carColor}</p>
+                    <p className="mb-4">Car Mileage: {auction.carMileage} km</p>
+                    <p className="mb-4">Car VIN: {auction.carVin}</p>
+                    <p className="mb-4">Start Time: {new Date(auction.startTime).toLocaleString()}</p>
                     <p className="mb-4">End Time: {new Date(auction.endTime).toLocaleString()}</p>
+                    <p className="mb-4">Created Date: {new Date(auction.createdDate).toLocaleString()}</p>
 
                     {/* Owner Information */}
                     <div className="mt-6">
