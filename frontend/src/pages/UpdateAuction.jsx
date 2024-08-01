@@ -112,6 +112,22 @@ const UpdateAuction = () => {
         }
     };
 
+    const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete this auction?')) {
+            try {
+                await axios.delete(`/api/auction/${formData.id}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setSuccessMessage('Auction deleted successfully!');
+                setErrorMessage('');
+                setTimeout(() => navigate('/auctions'), 2000); // Redirect after 2 seconds
+            } catch (error) {
+                setErrorMessage('There was an error deleting the auction!');
+                setSuccessMessage('');
+            }
+        }
+    };
+
     return (
         <div className="p-8 mt-16 bg-black text-white">
             <h1 className="text-4xl font-bold mb-4 text-orange-500">Update Auction</h1>
@@ -245,12 +261,21 @@ const UpdateAuction = () => {
                         className="p-2 border rounded bg-gray-700 text-white"
                         required
                     />
-                    <button
-                        type="submit"
-                        className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
-                    >
-                        Update Auction
-                    </button>
+                    <div className="flex justify-between">
+                        <button
+                            type="submit"
+                            className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
+                        >
+                            Update Auction
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleDelete}
+                            className="mt-4 bg-red-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-red-600"
+                        >
+                            Delete Auction
+                        </button>
+                    </div>
                     {successMessage && (
                         <p className="mt-4 text-green-500">{successMessage}</p>
                     )}
