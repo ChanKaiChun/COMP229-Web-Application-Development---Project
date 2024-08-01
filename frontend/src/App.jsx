@@ -12,7 +12,7 @@ import OwnerAuctions from './pages/OwnerAuctions.jsx';
 import AuctionDetails from './pages/AuctionDetails.jsx';
 import Home from './pages/Home.jsx';
 import CreateAuction from './pages/CreateAuction.jsx';
-import UpdateAuctions from './pages/UpdateAuctions.jsx'; // Import UpdateAuctions
+import UpdateAuctions from './pages/UpdateAuction.jsx'; // Import UpdateAuctions
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoutes.jsx';
 
