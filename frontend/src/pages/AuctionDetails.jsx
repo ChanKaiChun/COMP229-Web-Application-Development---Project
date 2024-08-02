@@ -68,9 +68,6 @@ const AuctionDetails = () => {
             });
     };
 
-    // Use default value for min if auction.currentPrice is undefined
-    const minBidAmount = auction.currentPrice ? auction.currentPrice + 1 : 1;
-
     return (
         <div className="p-8 mt-16 bg-black text-white">
             <div className="flex flex-col lg:flex-row">
@@ -104,7 +101,7 @@ const AuctionDetails = () => {
                                 type="number"
                                 value={bidAmount}
                                 onChange={handleBidChange}
-                                min={minBidAmount} // Minimum bid is one more than the current price
+                                min={auction.currentPrice + 1} // Minimum bid is one more than the current price
                                 className="w-full p-2 border rounded bg-gray-700 text-white"
                                 required
                             />

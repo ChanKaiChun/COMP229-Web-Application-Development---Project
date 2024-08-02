@@ -1,56 +1,48 @@
 // src/services/auctionService.jsx
 import axios from 'axios';
 
+// Create an axios instance
+const api = axios.create({
+    baseURL: '/api', // Adjust this if your base URL is different
+});
+
+// Add a request interceptor to include the token in every request
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
+
 // Define the methods to interact with auction-related API endpoints
 
-const getLiveAuctions = () => {
-    return axios.get(`/api/auction/live`);
-};
+const getLiveAuctions = () => api.get('/auction/live');
 
-const getFeaturedAuctions = () => {
-    return axios.get(`/api/auction/featured`);
-};
+const getFeaturedAuctions = () => api.get('/auction/featured');
 
-const getPassedAuctions = () => {
-    return axios.get(`/api/auction/passed`);
-};
+const getPassedAuctions = () => api.get('/auction/passed');
 
-const getAuctionById = (auctionId) => {
-    return axios.get(`/api/auction/${auctionId}`);
-};
+const getAuctionById = (auctionId) => api.get(`/auction/${auctionId}`);
 
-const getOwnerAuctions = (auctionId) => {
-    return axios.get(`/api/auction/owner/${auctionId}`);
-};
+const getOwnerAuctions = (auctionId) => api.get(`/auction/owner/${auctionId}`);
 
-const createAuction = (auctionData) => {
-    return axios.post(`/api/auction`, auctionData);
-};
+const createAuction = (auctionData) => api.post('/auction', auctionData);
 
-const updateAuctions = (auctionId, auctionData) => {
-    return axios.put(`/api/auction/${auctionId}`, auctionData);
-};
+const updateAuctions = (auctionId, auctionData) => api.put(`/auction/${auctionId}`, auctionData);
 
-const register = (user) => {
-    return axios.post(`/api/auth/register`, user);
-};
+const register = (user) => api.post('/auth/register', user);
 
-const login = (user) => {
-    return axios.post(`/api/auth/login`, user);
-};
+const login = (user) => api.post('/auth/login', user);
 
 // Bidding methods
-const placeBid = (bidData) => {
-    return axios.post(`/api/bid`, bidData);
-};
+const placeBid = (bidData) => api.post('/bid', bidData);
 
-const getMyBids = () => {
-    return axios.get(`/api/bid/my-bid`);
-};
+const getMyBids = () => api.get('/bid/my-bid');
 
-const getAuctionBids = (auctionId) => {
-    return axios.get(`/api/bid/auction/${auctionId}`);
-};
+const getAuctionBids = (auctionId) => api.get(`/bid/auction/${auctionId}`);
 
 // Export all the methods
 const auctionService = {
@@ -63,9 +55,9 @@ const auctionService = {
     updateAuctions,
     register,
     login,
-    placeBid,        // Add this method
-    getMyBids,       // Add this method
-    getAuctionBids,  // Add this method
+    placeBid,
+    getMyBids,
+    getAuctionBids,
 };
 
 export default auctionService;
