@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { AuthContext } from '../contexts/AuthContext.jsx';
 
 const AuctionDetails = () => {
     const { auctionId } = useParams();
@@ -9,6 +10,13 @@ const AuctionDetails = () => {
     const [bids, setBids] = useState([]);
     const [userBid, setUserBid] = useState(null);
     const [owner, setOwner] = useState({});
+    const { token } = useContext(AuthContext);
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
 
     useEffect(() => {
         // Fetch auction details
@@ -21,52 +29,52 @@ const AuctionDetails = () => {
             });
 
         // Fetch existing bids
-        axios.get(`/api/bid/auction/${auctionId}`)
-            .then(response => {
-                setBids(response.data);
-            })
-            .catch(error => {
-                console.error("There was an error fetching the bids!", error);
-            });
+        // axios.get(`/api/bid/auction/${auctionId}`)
+        //     .then(response => {
+        //         setBids(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.error("There was an error fetching the bids!", error);
+        //     });
 
         // Fetch user's bid on this auction
-        axios.get(`/api/bid/me`)
-            .then(response => {
-                const userBids = response.data.filter(bid => bid.auctionId === auctionId);
-                if (userBids.length > 0) {
-                    setUserBid(userBids[0]);
-                }
-            })
-            .catch(error => {
-                console.error("There was an error fetching user's bids!", error);
-            });
-
-        // Fetch auction owner information
-        axios.get(`/api/auction/owner/${auctionId}`)
-            .then(response => {
-                setOwner(response.data);
-            })
-            .catch(error => {
-                console.error("There was an error fetching the auction owner information!", error);
-            });
+        // axios.get(`/api/bid/me`, config)
+        //     .then(response => {
+        //         const userBids = response.data.filter(bid => bid.auctionId === auctionId);
+        //         if (userBids.length > 0) {
+        //             setUserBid(userBids[0]);
+        //         }
+        //     })
+        //     .catch(error => {
+        //         console.error("There was an error fetching user's bids!", error);
+        //     });
+        //
+        // // Fetch auction owner information
+        // axios.get(`/api/auction/owner/${auctionId}`, config)
+        //     .then(response => {
+        //         setOwner(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.error("There was an error fetching the auction owner information!", error);
+        //     });
     }, [auctionId]);
 
-    const handleBidChange = (e) => {
-        setBidAmount(e.target.value);
-    };
-
-    const handleBidSubmit = (e) => {
-        e.preventDefault();
-        axios.post('/api/bid', { auctionId, amount: bidAmount })
-            .then(response => {
-                // Update bids list
-                setBids(prevBids => [...prevBids, response.data]);
-                setBidAmount('');
-            })
-            .catch(error => {
-                console.error("There was an error submitting the bid!", error);
-            });
-    };
+    // const handleBidChange = (e) => {
+    //     setBidAmount(e.target.value);
+    // };
+    //
+    // const handleBidSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
+    //         .then(response => {
+    //             // Update bids list
+    //             setBids(prevBids => [...prevBids, response.data]);
+    //             setBidAmount('');
+    //         })
+    //         .catch(error => {
+    //             console.error("There was an error submitting the bid!", error);
+    //         });
+    // };
 
     return (
         <div className="p-8 mt-16 bg-black text-white">
@@ -96,22 +104,22 @@ const AuctionDetails = () => {
 
                     <div className="mt-6">
                         <h2 className="text-2xl font-bold mb-2">Place Your Bid</h2>
-                        <form onSubmit={handleBidSubmit}>
-                            <input
-                                type="number"
-                                value={bidAmount}
-                                onChange={handleBidChange}
-                                min={auction.currentPrice + 1} // Minimum bid is one more than the current price
-                                className="w-full p-2 border rounded bg-gray-700 text-white"
-                                required
-                            />
-                            <button
-                                type="submit"
-                                className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
-                            >
-                                Place Bid
-                            </button>
-                        </form>
+                        {/*<form onSubmit={handleBidSubmit}>*/}
+                        {/*    <input*/}
+                        {/*        type="number"*/}
+                        {/*        value={bidAmount}*/}
+                        {/*        onChange={handleBidChange}*/}
+                        {/*        min={auction.currentPrice + 1} // Minimum bid is one more than the current price*/}
+                        {/*        className="w-full p-2 border rounded bg-gray-700 text-white"*/}
+                        {/*        required*/}
+                        {/*    />*/}
+                        {/*    <button*/}
+                        {/*        type="submit"*/}
+                        {/*        className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"*/}
+                        {/*    >*/}
+                        {/*        Place Bid*/}
+                        {/*    </button>*/}
+                        {/*</form>*/}
                     </div>
 
                     <div className="mt-6">
