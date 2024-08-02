@@ -37,7 +37,7 @@ public class AuctionController {
     }
 
     @GetMapping("/{auctionId}")
-    public ResponseEntity<Auction> getAuction(@PathVariable String auctionId) {
+    public ResponseEntity<AuctionDetailResponse> getAuction(@PathVariable String auctionId) {
         return ResponseEntity.ok().body(auctionService.getAuction(auctionId));
     }
 

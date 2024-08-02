@@ -2,6 +2,7 @@ package org.centennialcollege.carauctionsystem.auction;
 
 import org.centennialcollege.carauctionsystem.auth.Users;
 import org.centennialcollege.carauctionsystem.auth.UsersRepository;
+import org.centennialcollege.carauctionsystem.bid.Bid;
 import org.centennialcollege.carauctionsystem.bid.BidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,14 +35,15 @@ public class AuctionService {
 
     public List<Auction> getPassedAuctions(){
         List<Auction> auctions = auctionRepository.findAllByEndTimeBefore(Instant.now());
-        auctions.forEach(auction -> {
-            
-        });
         return auctions;
     }
 
-    public Auction getAuction(String id) {
-        return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
+    public AuctionDetailResponse getAuction(String id) {
+        Auction auction = auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
+        Users owner = usersRepository.findById(auction.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
+        Bid firstBids = bidRepository.findFirstByAuctionIdOrderByBidTimeDesc(auction.getId());
+        Users bidder = usersRepository.findById(firstBids.getBidderId()).orElseThrow(() -> new RuntimeException("User not found"));
+        return new AuctionDetailResponse(auction, owner, firstBids, bidder);
     }
 
     public void createAuction(Auction auction, String email) {
