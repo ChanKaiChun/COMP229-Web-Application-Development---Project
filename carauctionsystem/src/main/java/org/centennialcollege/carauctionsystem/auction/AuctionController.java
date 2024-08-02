@@ -63,6 +63,6 @@ public class AuctionController {
     @GetMapping("/my-auction")
     public ResponseEntity<List<Auction>> getMyAuction(@RequestParam(required=false) String type) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-       return ResponseEntity.ok().body(auctionService.getAuctionsByUser(type, user.getUsername()));
+        return ResponseEntity.ok().body(auctionService.getAuctionsByUser(type, user.getUsername()));
     }
 }

@@ -43,6 +43,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests((authz) -> authz
                     .requestMatchers("/swagger-ui/**", "/api-docs/**").permitAll() // For swagger
                     .requestMatchers("/auth/login/**", "/auth/register/**").permitAll() // For register and login
+                    .requestMatchers("/auction/my-auction").authenticated()
                     .requestMatchers(HttpMethod.GET, "/auction/**").permitAll()
                     .anyRequest().authenticated()
             ).sessionManagement((management) -> management
