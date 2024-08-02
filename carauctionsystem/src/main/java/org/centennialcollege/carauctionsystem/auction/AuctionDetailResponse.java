@@ -1,5 +1,6 @@
 package org.centennialcollege.carauctionsystem.auction;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.centennialcollege.carauctionsystem.auth.Users;
 import org.centennialcollege.carauctionsystem.bid.Bid;
@@ -9,6 +10,7 @@ import java.time.Instant;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuctionDetailResponse {
     private String carModel;
     private String carMake;
@@ -41,6 +43,8 @@ public class AuctionDetailResponse {
         this.startTime = auction.getStartTime();
         this.endTime = auction.getEndTime();
         this.owner = new AuctionOwnerResponse(owner);
-        this.currentBid = new BidDetailResponse(currentBid, bidder);
+        if(currentBid != null){
+            this.currentBid = new BidDetailResponse(currentBid, bidder);
+        }
     }
 }

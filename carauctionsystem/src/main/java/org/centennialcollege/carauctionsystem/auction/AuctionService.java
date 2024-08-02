@@ -42,7 +42,10 @@ public class AuctionService {
         Auction auction = auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction not found"));
         Users owner = usersRepository.findById(auction.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
         Bid firstBids = bidRepository.findFirstByAuctionIdOrderByBidTimeDesc(auction.getId());
-        Users bidder = usersRepository.findById(firstBids.getBidderId()).orElseThrow(() -> new RuntimeException("User not found"));
+        Users bidder = null;
+        if(firstBids != null){
+            bidder = usersRepository.findById(firstBids.getBidderId()).orElseThrow(() -> new RuntimeException("User not found"));
+        }
         return new AuctionDetailResponse(auction, owner, firstBids, bidder);
     }
 
