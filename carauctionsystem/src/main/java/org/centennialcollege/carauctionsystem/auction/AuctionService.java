@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,7 +46,6 @@ public class AuctionService {
 
     public void createAuction(Auction auction, String email) {
         Users user = usersRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Current user is not exist"));
-
         auction.setCurrentPrice(auction.getStartPrice());
         auction.setCreatedDate(Instant.now());
         auction.setOwnerId(user.getId());
@@ -74,5 +74,29 @@ public class AuctionService {
         Auction auction = auctionRepository.findById(id).orElseThrow(()->new RuntimeException("Auction not found"));
         Users auctionOwner = usersRepository.findByEmail(auction.getOwnerId()).orElseThrow(()->new RuntimeException("User not found"));
         return new AuctionOwnerResponse(auctionOwner);
+    }
+
+    public List<Auction> getAuctionsByUser(String type, String email) {
+        Users user = usersRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Current user is not exist"));
+        List<Auction> auctions = new ArrayList<>();
+        if(type == null){
+            type = "";
+        }
+        switch (type) {
+            case "featured":
+                auctions.addAll(auctionRepository.findAllByOwnerIdAndStartTimeAfter(user.getId(), Instant.now()));
+                break;
+            case "live":
+                auctions.addAll(auctionRepository.findAllByOwnerIdAndStartTimeBeforeAndEndTimeAfter(user.getId(), Instant.now(), Instant.now()));
+                break;
+            case "passed":
+                auctions.addAll(auctionRepository.findAllByOwnerIdAndEndTimeBefore(user.getId(), Instant.now()));
+                break;
+            default:
+                auctions.addAll(auctionRepository.findAllByOwnerId(user.getId()));
+                break;
+        }
+        System.out.println(auctions);
+        return auctions;
     }
 }
