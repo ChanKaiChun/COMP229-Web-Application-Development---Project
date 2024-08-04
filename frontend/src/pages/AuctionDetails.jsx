@@ -33,18 +33,18 @@ const AuctionDetails = () => {
         setBidAmount(e.target.value);
     };
 
-    // const handleBidSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
-    //         .then(response => {
-    //             // Update bids list
-    //             setBids(prevBids => [...prevBids, response.data]);
-    //             setBidAmount('');
-    //         })
-    //         .catch(error => {
-    //             console.error("There was an error submitting the bid!", error);
-    //         });
-    // };
+    const handleBidSubmit = (e) => {
+        e.preventDefault();
+        axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
+            .then(response => {
+                // Update bids list
+                setBids(prevBids => [...prevBids, response.data]);
+                setBidAmount('');
+            })
+            .catch(error => {
+                console.error("There was an error submitting the bid!", error);
+            });
+    };
 
     if (isLoading){
         return <p>Loading</p>
@@ -74,40 +74,41 @@ const AuctionDetails = () => {
                         <p>Contact: {auction.owner.contact}</p>
                         {/* Add more owner details as needed */}
                     </div>
-
-                    <div className="mt-6">
-                        <h2 className="text-2xl font-bold mb-2">Place Your Bid</h2>
-                        {/*<form onSubmit={handleBidSubmit}>*/}
-                        <form>
-                            <input
-                                type="number"
-                                value={bidAmount}
-                                onChange={handleBidChange}
-                                min={auction.currentPrice + 1} // Minimum bid is one more than the current price
-                                className="w-full p-2 border rounded bg-gray-700 text-white"
-                                required
-                            />
-                            <button
-                                type="submit"
-                                className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
-                            >
-                                Place Bid
-                            </button>
-                        </form>
-                    </div>
-
-                    <div className="mt-6">
-                        <h2 className="text-2xl font-bold mb-2">Current Bids</h2>
-                        {/*<ul>*/}
-                        {/*    {bids.map(bid => (*/}
-                        {/*        <li key={bid.id} className="mb-2">*/}
-                        {/*            <p>Bidder: {bid.bidderName}</p>*/}
-                        {/*            <p>Amount: CAD ${bid.amount}</p>*/}
-                        {/*            <p>Date: {new Date(bid.timestamp).toLocaleString()}</p>*/}
-                        {/*        </li>*/}
-                        {/*    ))}*/}
-                        {/*</ul>*/}
-                    </div>
+                    {(() => {
+                        if(token) {
+                            return <div className="mt-6">
+                                <h2 className="text-2xl font-bold mb-2">Place Your Bid</h2>
+                                <form onSubmit={handleBidSubmit}>
+                                    <input
+                                        type="number"
+                                        value={bidAmount}
+                                        onChange={handleBidChange}
+                                        min={auction.currentPrice + 1} // Minimum bid is one more than the current price
+                                        className="w-full p-2 border rounded bg-gray-700 text-white"
+                                        required
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="mt-4 bg-orange-500 text-white py-2 px-4 rounded transition duration-300 hover:bg-orange-600"
+                                    >
+                                        Place Bid
+                                    </button>
+                                </form>
+                            </div>;
+                        }
+                    })()}
+                    {auction.currentBid ? (
+                        <div className="mt-6">
+                            <h2 className="text-2xl font-bold mb-2">Current Bids</h2>
+                            <ul>
+                                <li key={auction.currentBid.id}>
+                                    <p>Bidder: {auction.currentBid.bidder.name}</p>
+                                    <p>Amount: {auction.currentBid.amount}</p>
+                                    <p>Date: {new Date(auction.currentBid.bidTime).toLocaleString()}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (<></>)}
                 </div>
             </div>
         </div>
