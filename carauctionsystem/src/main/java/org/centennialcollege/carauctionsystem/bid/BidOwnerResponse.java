@@ -1,7 +1,9 @@
 package org.centennialcollege.carauctionsystem.bid;
 
+import lombok.Data;
 import org.centennialcollege.carauctionsystem.auth.Users;
 
+@Data
 public class BidOwnerResponse {
     private String name;
     private String contact;

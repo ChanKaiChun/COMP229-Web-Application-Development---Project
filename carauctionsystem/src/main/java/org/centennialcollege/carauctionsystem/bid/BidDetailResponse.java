@@ -15,11 +15,13 @@ public class BidDetailResponse {
     private BidOwnerResponse bidder;
 
     public BidDetailResponse(Bid bid, Users owner){
+        System.out.println("bid: " + bid);
         this.id = bid.getId();
         this.auctionId = bid.getAuctionId();
         this.bidderId = bid.getBidderId();
         this.amount = bid.getAmount();
         this.bidTime = bid.getBidTime();
+        System.out.println("owner: " + owner);
         this.bidder = new BidOwnerResponse(owner);
     }
 }
