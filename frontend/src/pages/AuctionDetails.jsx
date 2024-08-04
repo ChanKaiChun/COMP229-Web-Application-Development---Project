@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { AuthContext } from '../contexts/AuthContext.jsx';
+import {AuthContext} from '../contexts/AuthContext.jsx';
 
 const AuctionDetails = () => {
     const { auctionId } = useParams();
@@ -18,8 +18,13 @@ const AuctionDetails = () => {
     }
 
     useEffect(() => {
+
         // Fetch auction details
-        axios.get(`/api/auction/${auctionId}`)
+        axios.get(`/api/auction/${auctionId}`, {
+            "headers": {
+                "Authorization" : `Bearer ${token}`
+            }
+        })
             .then(response => {
                 setAuction(response.data);
                 setIsLoading(false);
@@ -33,18 +38,18 @@ const AuctionDetails = () => {
         setBidAmount(e.target.value);
     };
 
-    // const handleBidSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
-    //         .then(response => {
-    //             // Update bids list
-    //             setBids(prevBids => [...prevBids, response.data]);
-    //             setBidAmount('');
-    //         })
-    //         .catch(error => {
-    //             console.error("There was an error submitting the bid!", error);
-    //         });
-    // };
+    const handleBidSubmit = (e) => {
+        e.preventDefault();
+        axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
+            .then(response => {
+                // Update bids list
+                setBids(prevBids => [...prevBids, response.data]);
+                setBidAmount('');
+            })
+            .catch(error => {
+                console.error("There was an error submitting the bid!", error);
+            });
+    };
 
     if (isLoading){
         return <p>Loading</p>
@@ -77,8 +82,8 @@ const AuctionDetails = () => {
 
                     <div className="mt-6">
                         <h2 className="text-2xl font-bold mb-2">Place Your Bid</h2>
-                        {/*<form onSubmit={handleBidSubmit}>*/}
-                        <form>
+                        <form onSubmit={handleBidSubmit}>
+                        {/*<form>*/}
                             <input
                                 type="number"
                                 value={bidAmount}
