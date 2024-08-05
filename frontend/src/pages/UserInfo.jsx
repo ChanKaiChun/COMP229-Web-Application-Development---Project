@@ -1,8 +1,17 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const UserInfo = () => {
-    const { token, currentUser } = useContext(AuthContext);
+    const { token, currentUser, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+       if(token) {
+           logout();
+           navigate('/account');
+       }
+    };
 
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
@@ -19,6 +28,12 @@ const UserInfo = () => {
                 </p>
                 <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded">
                     Edit Profile
+                </button>
+                <button
+                    onClick={handleLogout}
+                    className="ml-4 mt-4 bg-red-600 text-white py-2 px-4 rounded"
+                >
+                    Logout
                 </button>
             </div>
         </div>

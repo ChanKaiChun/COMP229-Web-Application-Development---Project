@@ -15,6 +15,7 @@ import CreateAuction from './pages/CreateAuction.jsx';
 import UpdateAuctions from './pages/UpdateAuction.jsx'; // Import UpdateAuctions
 import { AuthProvider } from './contexts/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoutes.jsx';
+import MyAuction from './pages/MyAuction.jsx'
 
 function App() {
     return (
@@ -34,8 +35,8 @@ function App() {
                         <Route path="/owner-auctions" element={<OwnerAuctions />} />
                         <Route path="/auction/:auctionId" element={<AuctionDetails />} />
                         <Route path="/create-auction" element={<CreateAuction />} />
-                        <Route path="/update-auction" element={<UpdateAuctions />} />
-
+                        <Route path="/update-auction/:id" element={<UpdateAuctions />} />
+                        <Route path="/my-auction" element={<MyAuction />} />
                     </Routes>
                 </div>
             </Router>
