@@ -65,4 +65,11 @@ public class AuctionController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok().body(auctionService.getAuctionsByUser(type, user.getUsername()));
     }
+
+    @DeleteMapping("/{auctionId}")
+    public ResponseEntity<?> deleteAuction(@PathVariable String auctionId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        auctionService.deleteAuction(auctionId, user.getUsername());
+        return ResponseEntity.accepted().build();
+    }
 }

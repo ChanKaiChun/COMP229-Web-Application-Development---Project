@@ -104,4 +104,15 @@ public class AuctionService {
         System.out.println(auctions);
         return auctions;
     }
+
+    public void deleteAuction(String id, String email) {
+        Auction auction = auctionRepository.findById(id).orElseThrow(()->new RuntimeException("Auction not found"));
+        Users user = usersRepository.findByEmail(email).orElseThrow(()->new RuntimeException("User not found"));
+        if(user.getId().equals(auction.getOwnerId())){
+            bidRepository.deleteByAuctionId(id);
+            auctionRepository.delete(auction);
+        } else {
+            throw new RuntimeException("You are not the Owner.");
+        }
+    }
 }
