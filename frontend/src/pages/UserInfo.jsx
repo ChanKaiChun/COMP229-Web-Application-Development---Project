@@ -26,9 +26,6 @@ const UserInfo = () => {
                 <p>
                     <strong>Last Name:</strong> {currentUser?.lastName || 'N/A'}
                 </p>
-                <button className="mt-4 bg-blue-600 text-white py-2 px-4 rounded">
-                    Edit Profile
-                </button>
                 <button
                     onClick={handleLogout}
                     className="ml-4 mt-4 bg-red-600 text-white py-2 px-4 rounded"
