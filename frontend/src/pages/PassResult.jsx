@@ -49,10 +49,13 @@ const PassResults = () => {
                                 <p className="mt-2 text-white">Start Time: {new Date(result.startTime).toLocaleString()}</p>
                                 <p className="mt-2 text-white">End Time: {new Date(result.endTime).toLocaleString()}</p>
                                 {(() => {
-                                    if(result.winnerId) {
+                                    if (result.winnerId) {
                                         return <p className="mt-2 text-white">Winner ID: {result.winnerId}</p>;
+                                    } else {
+                                        return <p className="mt-2 text-white">No winner,No bid placed.</p>;
                                     }
                                 })()}
+
                                 <p className="mt-2 text-white">Created Date: {new Date(result.createdDate).toLocaleString()}</p>
                             </div>
                         </div>
