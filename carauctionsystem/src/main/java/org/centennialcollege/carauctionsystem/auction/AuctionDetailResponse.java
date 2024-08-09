@@ -12,6 +12,7 @@ import java.time.Instant;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AuctionDetailResponse {
+    private String id;
     private String carModel;
     private String carMake;
     private String carYear;
@@ -31,6 +32,7 @@ public class AuctionDetailResponse {
     private UserResponse winner;
 
     public AuctionDetailResponse(Auction auction, Users owner, Bid currentBid, Users bidder, Users winner) {
+        this.id = auction.getId();
         this.carModel = auction.getCarModel();
         this.carMake = auction.getCarMake();
         this.carYear = auction.getCarYear();

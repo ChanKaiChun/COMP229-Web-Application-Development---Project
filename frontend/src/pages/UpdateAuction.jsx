@@ -14,24 +14,7 @@ const UpdateAuction = () => {
         }
     };
 
-    const [formData, setFormData] = useState({
-        id: '',
-        carModel: '',
-        carMake: '',
-        carYear: '',
-        carColor: '',
-        carMileage: '',
-        carVin: '',
-        description: '',
-        ownerId: '',
-        startPrice: '',
-        reservePrice: '',
-        currentPrice: '',
-        startTime: '',
-        endTime: '',
-        winnerId: '',
-        createdDate: '',
-    });
+    const [formData, setFormData] = useState({});
 
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -41,25 +24,7 @@ const UpdateAuction = () => {
         const fetchAuctionData = async () => {
             try {
                 const response = await axios.get(`/api/auction/${id}`, config);
-                const auctionData = response.data;
-
-                setFormData({
-                    id: id,
-                    carModel: auctionData.carModel,
-                    carMake: auctionData.carMake,
-                    carYear: auctionData.carYear,
-                    carColor: auctionData.carColor,
-                    carMileage: auctionData.carMileage.toString(),
-                    carVin: auctionData.carVin,
-                    description: auctionData.description,
-                    ownerId: auctionData.ownerId,
-                    startPrice: auctionData.startPrice,
-                    reservePrice: auctionData.reservePrice,
-                    currentPrice: auctionData.currentPrice,
-                    startTime: new Date(auctionData.startTime).toISOString().slice(0, 16),
-                    endTime: new Date(auctionData.endTime).toISOString().slice(0, 16),
-                    winnerId: auctionData.winnerId
-                });
+                setFormData(response.data);
 
                 setSuccessMessage('');
                 setErrorMessage('');
@@ -222,7 +187,7 @@ const UpdateAuction = () => {
                 <input
                     type="number"
                     name="currentPrice"
-                    value={formData.currentPrice}
+                    value={formData.currentBid.amount}
                     disabled={true}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
@@ -231,7 +196,7 @@ const UpdateAuction = () => {
                 <input
                     type="datetime-local"
                     name="startTime"
-                    value={formData.startTime}
+                    value={new Date(formData.startTime).toISOString().slice(0, 16)}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
@@ -240,19 +205,31 @@ const UpdateAuction = () => {
                 <input
                     type="datetime-local"
                     name="endTime"
-                    value={formData.endTime}
+                    value={new Date(formData.endTime).toISOString().slice(0, 16)}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
-                <label>Winner Name</label>
-                <input
-                    type="text"
-                    name="winnerId"
-                    value={formData.winnerId}
-                    onChange={handleChange}
-                    className="p-2 border rounded bg-gray-700 text-white"
-                />
+                {(() => {
+                    if (formData.winner) {
+                        return <><label>Winner Name</label>
+                        <input
+                            type="text"
+                            name=""
+                            value={formData.winner.name}
+                            onChange={handleChange}
+                            className="p-2 border rounded bg-gray-700 text-white"
+                        />
+                        <label>Winner Contact</label>
+                        <input
+                            type="text"
+                            name=""
+                            value={formData.winner.contact}
+                            onChange={handleChange}
+                            className="p-2 border rounded bg-gray-700 text-white"
+                        /></>;
+                    }
+                })()}
                 <div className="flex justify-between">
                     <button
                         type="submit"
@@ -280,4 +257,3 @@ const UpdateAuction = () => {
 };
 
 export default UpdateAuction;
-``
