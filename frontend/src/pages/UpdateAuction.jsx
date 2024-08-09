@@ -53,13 +53,12 @@ const UpdateAuction = () => {
                     carVin: auctionData.carVin,
                     description: auctionData.description,
                     ownerId: auctionData.ownerId,
-                    startPrice: auctionData.startPrice.toString(),
-                    reservePrice: auctionData.reservePrice.toString(),
-                    currentPrice: auctionData.currentPrice.toString(),
+                    startPrice: auctionData.startPrice,
+                    reservePrice: auctionData.reservePrice,
+                    currentPrice: auctionData.currentPrice,
                     startTime: new Date(auctionData.startTime).toISOString().slice(0, 16),
                     endTime: new Date(auctionData.endTime).toISOString().slice(0, 16),
-                    winnerId: auctionData.winnerId,
-                    createdDate: new Date(auctionData.createdDate).toISOString().slice(0, 16),
+                    winnerId: auctionData.winnerId
                 });
 
                 setSuccessMessage('');
@@ -67,7 +66,6 @@ const UpdateAuction = () => {
             } catch (error) {
                 setErrorMessage('Failed to fetch auction data');
                 setSuccessMessage('');
-                console.log(error)
             } finally {
                 setIsFetching(false);
             }
@@ -104,10 +102,8 @@ const UpdateAuction = () => {
             carMileage: parseFloat(formData.carMileage),
             startPrice: parseFloat(formData.startPrice),
             reservePrice: parseFloat(formData.reservePrice),
-            currentPrice: parseFloat(formData.currentPrice),
             startTime: formatDate(formData.startTime),
-            endTime: formatDate(formData.endTime),
-            createdDate: formatDate(formData.createdDate)
+            endTime: formatDate(formData.endTime)
         };
 
         try {
@@ -141,129 +137,120 @@ const UpdateAuction = () => {
         <div className="p-8 mt-16 bg-black text-white">
             <h1 className="text-4xl font-bold mb-4 text-orange-500">Update Auction</h1>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                <label>Car Model</label>
                 <input
                     type="text"
                     name="carModel"
-                    placeholder="Car Model"
                     value={formData.carModel}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Make</label>
                 <input
                     type="text"
                     name="carMake"
-                    placeholder="Car Make"
                     value={formData.carMake}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Year</label>
                 <input
                     type="text"
                     name="carYear"
-                    placeholder="Car Year"
                     value={formData.carYear}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Color</label>
                 <input
                     type="text"
                     name="carColor"
-                    placeholder="Car Color"
                     value={formData.carColor}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Mileage</label>
                 <input
                     type="number"
                     name="carMileage"
-                    placeholder="Car Mileage"
                     value={formData.carMileage}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car VIN</label>
                 <input
                     type="text"
                     name="carVin"
-                    placeholder="Car VIN"
                     value={formData.carVin}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Description</label>
                 <textarea
                     name="description"
-                    placeholder="Description"
                     value={formData.description}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 ></textarea>
+                <label>Start Price</label>
                 <input
                     type="number"
                     name="startPrice"
-                    placeholder="Start Price"
                     value={formData.startPrice}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Reserve Price</label>
                 <input
                     type="number"
                     name="reservePrice"
-                    placeholder="Reserve Price"
                     value={formData.reservePrice}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Current Price</label>
                 <input
                     type="number"
                     name="currentPrice"
-                    placeholder="Current Price"
                     value={formData.currentPrice}
-                    onChange={handleChange}
+                    disabled={true}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Start Time</label>
                 <input
                     type="datetime-local"
                     name="startTime"
-                    placeholder="Start Time"
                     value={formData.startTime}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>End Time</label>
                 <input
                     type="datetime-local"
                     name="endTime"
-                    placeholder="End Time"
                     value={formData.endTime}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Winner Name</label>
                 <input
                     type="text"
                     name="winnerId"
-                    placeholder="Winner ID"
                     value={formData.winnerId}
                     onChange={handleChange}
                     className="p-2 border rounded bg-gray-700 text-white"
-                />
-                <input
-                    type="datetime-local"
-                    name="createdDate"
-                    placeholder="Created Date"
-                    value={formData.createdDate}
-                    onChange={handleChange}
-                    className="p-2 border rounded bg-gray-700 text-white"
-                    required
                 />
                 <div className="flex justify-between">
                     <button

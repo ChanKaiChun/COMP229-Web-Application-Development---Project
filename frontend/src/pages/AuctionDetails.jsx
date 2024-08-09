@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {redirect, useNavigate, useParams} from "react-router-dom";
 import { AuthContext } from '../contexts/AuthContext.jsx';
 
 const AuctionDetails = () => {
+    const navigate = useNavigate(); // Move useNavigate inside the component
     const { auctionId } = useParams();
     const [auction, setAuction] = useState({});
     const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +24,8 @@ const AuctionDetails = () => {
             .then(response => {
                 setAuction(response.data);
                 setIsLoading(false);
+                setBidAmount(response.data.currentBid?(response.data.currentBid.amount+1):(response.data.startPrice+1));
+                console.log(response.data);
             })
             .catch(error => {
                 console.error("There was an error fetching the auction details!", error);
@@ -36,10 +39,8 @@ const AuctionDetails = () => {
     const handleBidSubmit = (e) => {
         e.preventDefault();
         axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
-            .then(response => {
-                // Update bids list
-                setBids(prevBids => [...prevBids, response.data]);
-                setBidAmount('');
+            .then(() => {
+                window.location.reload();
             })
             .catch(error => {
                 console.error("There was an error submitting the bid!", error);
@@ -81,9 +82,9 @@ const AuctionDetails = () => {
                                 <form onSubmit={handleBidSubmit}>
                                     <input
                                         type="number"
-                                        value={bidAmount}
+                                        value={auction.currentBid?(auction.currentBid.amount+1):(auction.startPrice+1)}
                                         onChange={handleBidChange}
-                                        min={auction.currentPrice + 1} // Minimum bid is one more than the current price
+                                        min={auction.currentBid?(auction.currentBid.amount+1):(auction.startPrice+1)} // Minimum bid is one more than the current price
                                         className="w-full p-2 border rounded bg-gray-700 text-white"
                                         required
                                     />

@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import { AuthContext } from '../contexts/AuthContext.jsx';
-import authService from "../services/auctionService.jsx"
+import authService from "../services/AuctionService.jsx"
 import { useNavigate } from 'react-router-dom';
 
 const Account = () => {

@@ -1,4 +1,4 @@
-// src/services/auctionService.jsx
+// src/services/AuctionService.jsx
 import axios from 'axios';
 
 // Define the methods to interact with auction-related API endpoints

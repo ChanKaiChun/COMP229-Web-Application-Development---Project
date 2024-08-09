@@ -1,6 +1,6 @@
 // src/pages/OwnerAuctions.jsx
 import React, { useState, useEffect } from 'react';
-import auctionService from '../services/auctionService.jsx';
+import auctionService from '../services/AuctionService.jsx';
 
 const OwnerAuctions = () => {
     const [auctions, setAuctions] = useState([]);
