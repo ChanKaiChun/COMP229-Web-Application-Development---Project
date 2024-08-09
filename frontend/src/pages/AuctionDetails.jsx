@@ -38,13 +38,18 @@ const AuctionDetails = () => {
 
     const handleBidSubmit = (e) => {
         e.preventDefault();
-        axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(error => {
-                console.error("There was an error submitting the bid!", error);
-            });
+        let min = auction.currentBid?(auction.currentBid.amount+1):(auction.startPrice+1);
+        if(bidAmount > min){
+            axios.post('/api/bid', { auctionId, amount: bidAmount }, config)
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error("There was an error submitting the bid!", error);
+                });
+        } else {
+            console.error("Not greater then min");
+        }
     };
 
     if (isLoading){
@@ -84,7 +89,6 @@ const AuctionDetails = () => {
                                         type="number"
                                         value={auction.currentBid?(auction.currentBid.amount+1):(auction.startPrice+1)}
                                         onChange={handleBidChange}
-                                        min={auction.currentBid?(auction.currentBid.amount+1):(auction.startPrice+1)} // Minimum bid is one more than the current price
                                         className="w-full p-2 border rounded bg-gray-700 text-white"
                                         required
                                     />
