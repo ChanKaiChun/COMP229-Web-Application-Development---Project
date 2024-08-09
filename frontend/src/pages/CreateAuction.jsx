@@ -63,88 +63,88 @@ const CreateAuction = () => {
         <div className="p-8 mt-16 bg-black text-white">
             <h1 className="text-4xl font-bold mb-4 text-orange-500">Create Auction</h1>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+                <label>Car Model</label>
                 <input
                     type="text"
-                    placeholder="Car Model"
                     value={carModel}
                     onChange={(e) => setCarModel(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Make</label>
                 <input
                     type="text"
-                    placeholder="Car Make"
                     value={carMake}
                     onChange={(e) => setCarMake(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Year</label>
                 <input
                     type="text"
-                    placeholder="Car Year"
                     value={carYear}
                     onChange={(e) => setCarYear(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Color</label>
                 <input
                     type="text"
-                    placeholder="Car Color"
                     value={carColor}
                     onChange={(e) => setCarColor(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car Mileage</label>
                 <input
                     type="number"
-                    placeholder="Car Mileage"
                     value={carMileage}
                     onChange={(e) => setCarMileage(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Car VIN</label>
                 <input
                     type="text"
-                    placeholder="Car VIN"
                     value={carVin}
                     onChange={(e) => setCarVin(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Description</label>
                 <textarea
-                    placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 ></textarea>
+                <label>Start Price</label>
                 <input
                     type="number"
-                    placeholder="Start Price"
                     value={startPrice}
                     onChange={(e) => setStartPrice(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Reserve Price</label>
                 <input
                     type="number"
-                    placeholder="Reserve Price"
                     value={reservePrice}
                     onChange={(e) => setReservePrice(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>Start Time</label>
                 <input
                     type="datetime-local"
-                    placeholder="Start Time"
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
                 />
+                <label>End Time</label>
                 <input
                     type="datetime-local"
-                    placeholder="End Time"
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
                     className="p-2 border rounded bg-gray-700 text-white"
