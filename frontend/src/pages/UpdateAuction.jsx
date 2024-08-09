@@ -44,7 +44,7 @@ const UpdateAuction = () => {
                 const auctionData = response.data;
 
                 setFormData({
-                    id: auctionData.id,
+                    id: id,
                     carModel: auctionData.carModel,
                     carMake: auctionData.carMake,
                     carYear: auctionData.carYear,
@@ -107,10 +107,10 @@ const UpdateAuction = () => {
         };
 
         try {
-            await axios.put(`/api/auction/${formData.id}`, updatedAuction, config);
+            await axios.put(`/api/auction`, updatedAuction, config);
             setSuccessMessage('Auction updated successfully!');
             setErrorMessage('');
-            setTimeout(() => navigate('/my-auctions'), 2000); // Redirect after 2 seconds
+            setTimeout(() => navigate('/my-auction'), 2000); // Redirect after 2 seconds
         } catch (error) {
             setErrorMessage('There was an error updating the auction!');
             setSuccessMessage('');
@@ -119,11 +119,12 @@ const UpdateAuction = () => {
 
     const handleDelete = async () => {
         if (window.confirm('Are you sure you want to delete this auction?')) {
+            console.log("formData: " + JSON.stringify(formData));
             try {
                 await axios.delete(`/api/auction/${formData.id}`, config);
                 setSuccessMessage('Auction deleted successfully!');
                 setErrorMessage('');
-                setTimeout(() => navigate('/my-auctions'), 2000); // Redirect after 2 seconds
+                setTimeout(() => navigate('/my-auction'), 2000); // Redirect after 2 seconds
             } catch (error) {
                 setErrorMessage('There was an error deleting the auction!');
                 setSuccessMessage('');
