@@ -47,12 +47,4 @@ public class BidService {
     public void findLatestBidByAuction(String auctionId) {
         System.out.println(bidRepository.findFirstByAuctionIdOrderByBidTimeDesc("6695faa852b0be6663901a38"));
     }
-
-    public void findMyBid(String email) throws Exception {
-
-    }
-
-    public void findMyBidInAuction(String auction, String email) throws Exception {
-
-    }
 }
