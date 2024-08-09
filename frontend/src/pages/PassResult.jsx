@@ -48,7 +48,11 @@ const PassResults = () => {
                                 <p className="mt-2 text-white">Current Price: ${result.currentPrice}</p>
                                 <p className="mt-2 text-white">Start Time: {new Date(result.startTime).toLocaleString()}</p>
                                 <p className="mt-2 text-white">End Time: {new Date(result.endTime).toLocaleString()}</p>
-                                <p className="mt-2 text-white">Winner ID: {result.winnerId}</p>
+                                {(() => {
+                                    if(result.winnerId) {
+                                        return <p className="mt-2 text-white">Winner ID: {result.winnerId}</p>;
+                                    }
+                                })()}
                                 <p className="mt-2 text-white">Created Date: {new Date(result.createdDate).toLocaleString()}</p>
                             </div>
                         </div>
