@@ -187,7 +187,7 @@ const UpdateAuction = () => {
                 <input
                     type="number"
                     name="currentPrice"
-                    value={formData.currentBid.amount}
+                    value={formData.currentBid?(formData.currentBid.amount):(formData.startPrice)}
                     disabled={true}
                     className="p-2 border rounded bg-gray-700 text-white"
                     required
