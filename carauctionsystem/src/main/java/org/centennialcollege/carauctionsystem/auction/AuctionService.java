@@ -86,10 +86,8 @@ public class AuctionService {
         auctionData.setDescription(auction.getDescription());
         auctionData.setStartPrice(auction.getStartPrice());
         auctionData.setReservePrice(auction.getReservePrice());
-        auctionData.setCurrentPrice(auction.getCurrentPrice());
         auctionData.setStartTime(auction.getStartTime());
         auctionData.setEndTime(auction.getEndTime());
-        auctionData.setWinnerId(auction.getWinnerId());
         auctionRepository.save(auctionData);
     }
 
