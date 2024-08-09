@@ -1,6 +1,7 @@
 package org.centennialcollege.carauctionsystem.auction;
 
 import jakarta.validation.Valid;
+import org.centennialcollege.carauctionsystem.auth.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,7 +57,7 @@ public class AuctionController {
     }
 
     @GetMapping("/owner/{auctionId}")
-    public ResponseEntity<AuctionOwnerResponse> getAuctionOwner(@PathVariable String auctionId) {
+    public ResponseEntity<UserResponse> getAuctionOwner(@PathVariable String auctionId) {
         return ResponseEntity.ok().body(auctionService.getAuctionUser(auctionId));
     }
 

@@ -1,6 +1,7 @@
 package org.centennialcollege.carauctionsystem.bid;
 
 import lombok.Data;
+import org.centennialcollege.carauctionsystem.auth.UserResponse;
 import org.centennialcollege.carauctionsystem.auth.Users;
 
 import java.time.Instant;
@@ -12,16 +13,14 @@ public class BidDetailResponse {
     private String bidderId;
     private Double amount;
     private Instant bidTime;
-    private BidOwnerResponse bidder;
+    private UserResponse bidder;
 
     public BidDetailResponse(Bid bid, Users owner){
-        System.out.println("bid: " + bid);
         this.id = bid.getId();
         this.auctionId = bid.getAuctionId();
         this.bidderId = bid.getBidderId();
         this.amount = bid.getAmount();
         this.bidTime = bid.getBidTime();
-        System.out.println("owner: " + owner);
-        this.bidder = new BidOwnerResponse(owner);
+        this.bidder = new UserResponse(owner);
     }
 }

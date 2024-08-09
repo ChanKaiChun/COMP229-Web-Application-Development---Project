@@ -1,14 +1,13 @@
-package org.centennialcollege.carauctionsystem.auction;
+package org.centennialcollege.carauctionsystem.auth;
 
 import lombok.Data;
-import org.centennialcollege.carauctionsystem.auth.Users;
 
 @Data
-public class AuctionOwnerResponse {
+public class UserResponse {
     private String name;
     private String contact;
 
-    public AuctionOwnerResponse(Users user) {
+    public UserResponse(Users user) {
         this.name = user.getFirstName() + " " + user.getLastName();
         this.contact = user.getEmail();
     }

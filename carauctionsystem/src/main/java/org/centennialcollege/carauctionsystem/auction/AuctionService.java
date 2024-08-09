@@ -1,5 +1,6 @@
 package org.centennialcollege.carauctionsystem.auction;
 
+import org.centennialcollege.carauctionsystem.auth.UserResponse;
 import org.centennialcollege.carauctionsystem.auth.Users;
 import org.centennialcollege.carauctionsystem.auth.UsersRepository;
 import org.centennialcollege.carauctionsystem.bid.Bid;
@@ -35,6 +36,15 @@ public class AuctionService {
 
     public List<Auction> getPassedAuctions(){
         List<Auction> auctions = auctionRepository.findAllByEndTimeBefore(Instant.now());
+        for(Auction auction : auctions){
+            if(auction.getWinnerId() == null) {
+                Bid bid = bidRepository.findFirstByAuctionIdOrderByBidTimeDesc(auction.getId());
+                if(bid != null) {
+                    auction.setWinnerId(bid.getBidderId());
+                    auctionRepository.save(auction);
+                }
+            }
+        }
         return auctions;
     }
 
@@ -43,10 +53,18 @@ public class AuctionService {
         Users owner = usersRepository.findById(auction.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
         Bid firstBids = bidRepository.findFirstByAuctionIdOrderByBidTimeDesc(auction.getId());
         Users bidder = null;
+        Users winner = null;
         if(firstBids != null){
             bidder = usersRepository.findById(firstBids.getBidderId()).orElseThrow(() -> new RuntimeException("User not found"));
+            if(auction.getEndTime().isBefore(Instant.now())){
+                auction.setWinnerId(bidder.getId());
+                auctionRepository.save(auction);
+            }
+            if(auction.getWinnerId()!=null){
+                winner = usersRepository.findById(auction.getWinnerId()).orElseThrow(() -> new RuntimeException("User not found"));
+            }
         }
-        return new AuctionDetailResponse(auction, owner, firstBids, bidder);
+        return new AuctionDetailResponse(auction, owner, firstBids, bidder, winner);
     }
 
     public void createAuction(Auction auction, String email) {
@@ -75,10 +93,10 @@ public class AuctionService {
         auctionRepository.save(auctionData);
     }
 
-    public AuctionOwnerResponse getAuctionUser(String id) {
+    public UserResponse getAuctionUser(String id) {
         Auction auction = auctionRepository.findById(id).orElseThrow(()->new RuntimeException("Auction not found"));
         Users auctionOwner = usersRepository.findByEmail(auction.getOwnerId()).orElseThrow(()->new RuntimeException("User not found"));
-        return new AuctionOwnerResponse(auctionOwner);
+        return new UserResponse(auctionOwner);
     }
 
     public List<Auction> getAuctionsByUser(String type, String email) {

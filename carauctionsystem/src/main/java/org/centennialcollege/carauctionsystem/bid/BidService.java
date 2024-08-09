@@ -5,7 +5,6 @@ import org.centennialcollege.carauctionsystem.auction.AuctionRepository;
 import org.centennialcollege.carauctionsystem.auth.Users;
 import org.centennialcollege.carauctionsystem.auth.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +25,20 @@ public class BidService {
 
         Optional<Auction> auction = auctionRepository.findById(request.getAuctionId());
         if (auction.isPresent()) {
-            Bid bid = new Bid(request);
-            bid.setBidTime(Instant.now());
-            bid.setBidderId(user.getId());
-            bidRepository.save(bid);
-            auction.get().setReservePrice(bid.getAmount());
+            Double minPrice = auction.get().getStartPrice();
+            Bid lastBid = bidRepository.findFirstByAuctionIdOrderByBidTimeDesc(auction.get().getId());
+            if(lastBid != null) {
+                minPrice = lastBid.getAmount();
+            }
+            if(minPrice < request.getAmount()) {
+                Bid bid = new Bid(request);
+                bid.setBidTime(Instant.now());
+                bid.setBidderId(user.getId());
+                bidRepository.save(bid);
+                auction.get().setReservePrice(bid.getAmount());
+            } else {
+                throw new Exception("Bid is too low");
+            }
         } else {
             throw new Exception("Auction " + request.getAuctionId() + " is not exist");
         }
