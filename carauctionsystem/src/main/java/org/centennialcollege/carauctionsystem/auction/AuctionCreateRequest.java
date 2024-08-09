@@ -14,7 +14,6 @@ public class AuctionCreateRequest {
     private String carVin;
     private String description;
     private Double startPrice;
-    private Double reservePrice;
     private Instant startTime;
     private Instant endTime;
 }

@@ -35,7 +35,7 @@ public class BidService {
                 bid.setBidTime(Instant.now());
                 bid.setBidderId(user.getId());
                 bidRepository.save(bid);
-                auction.get().setReservePrice(bid.getAmount());
+                auction.get().setCurrentPrice(bid.getAmount());
             } else {
                 throw new Exception("Bid is too low");
             }

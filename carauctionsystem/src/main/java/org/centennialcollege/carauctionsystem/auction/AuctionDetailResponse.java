@@ -22,7 +22,6 @@ public class AuctionDetailResponse {
     private String description;
     private String ownerId;
     private Double startPrice;
-    private Double reservePrice;
     private Double currentPrice;
     private Instant startTime;
     private Instant endTime;
@@ -41,7 +40,6 @@ public class AuctionDetailResponse {
         this.carVin = auction.getCarVin();
         this.description = auction.getDescription();
         this.startPrice = auction.getStartPrice();
-        this.reservePrice = auction.getReservePrice();
         this.startTime = auction.getStartTime();
         this.endTime = auction.getEndTime();
         this.owner = new UserResponse(owner);

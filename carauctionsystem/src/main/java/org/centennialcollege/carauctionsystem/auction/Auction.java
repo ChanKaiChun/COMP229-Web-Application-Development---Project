@@ -22,7 +22,6 @@ public class Auction {
     private String description;
     private String ownerId;
     private Double startPrice;
-    private Double reservePrice;
     private Double currentPrice;
     private Instant startTime;
     private Instant endTime;
@@ -38,7 +37,6 @@ public class Auction {
         this.carVin = model.getCarVin();
         this.description = model.getDescription();
         this.startPrice = model.getStartPrice();
-        this.reservePrice = model.getReservePrice();
         this.startTime = model.getStartTime();
         this.endTime = model.getEndTime();
     }
