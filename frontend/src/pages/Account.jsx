@@ -1,10 +1,10 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../contexts/AuthContext.jsx';
-import authService from "../services/AuctionService.jsx"
+import authService from "../services/AuctionService.jsx";
 import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
-    const navigate = useNavigate(); // Move useNavigate inside the component
+    const navigate = useNavigate();
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,13 +15,14 @@ const Account = () => {
 
     const toggleForm = () => {
         setIsLogin(!isLogin);
+        setMessage(''); // Clear message on form switch
     };
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const response = await authService.register({ email, password, firstName, lastName });
-            setMessage(response.data.message);
+            setMessage(response.data.message || 'Registration successful');
         } catch (error) {
             setMessage(error.response ? error.response.data.message : 'An unexpected error occurred');
         }
@@ -36,21 +37,32 @@ const Account = () => {
                     email: response.data.email,
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
-                }); // Pass user info to AuthContext
-                navigate('/user-info'); // Redirect to UserInfo page
+                });
+                navigate('/user-info');
             } else {
                 setMessage('No token received');
             }
         } catch (error) {
-            setMessage(error.response ? error.response.data.message : 'An unexpected error occurred');
+            if (error.response) {
+                // Check for specific error response codes
+                switch (error.response.status) {
+                    case 400:
+                        setMessage('Invalid email or password');
+                        break;
+                    default:
+                        setMessage('An unexpected error occurred');
+                }
+            } else {
+                setMessage('An unexpected error occurred');
+            }
         }
     };
 
     useEffect(() => {
-        if(token){
+        if (token) {
             navigate('/user-info');
         }
-    }, []);
+    }, [token, navigate]);
 
     return (
         <div className="flex justify-center items-center h-screen bg-gray-900 text-white">

@@ -84,31 +84,30 @@ const Navbar = () => {
           <div className="pt-8 px-6 h-full">
             <ul>
               <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/live-auction" onClick={handleNav}>Live Auctions</Link>
+                <Link to="/live-auction" onClick={handleNav} className="font-bold">Live Auctions</Link>
               </li>
               <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/featured-auctions" onClick={handleNav}>Featured Auctions</Link>
+                <Link to="/featured-auctions" onClick={handleNav} className="font-bold">Featured Auctions</Link>
               </li>
               <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/pass-result" onClick={handleNav}>Pass Result</Link>
+                <Link to="/pass-result" onClick={handleNav} className="font-bold">Pass Result</Link>
               </li>
               <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/sell-car" onClick={handleNav}>Sell a Car</Link>
-              </li>
-              <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/community" onClick={handleNav}>Community</Link>
-              </li>
-              <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/shop" onClick={handleNav}>Shop</Link>
-              </li>
-              <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                <Link to="/account" onClick={handleNav}>Account</Link>
+                <Link to="/sell-car" onClick={handleNav} className="font-bold">Sell a Car</Link>
               </li>
               {token && ( // Conditionally render the button in mobile menu
                   <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
-                    <Link to="/create-auction" onClick={handleNav}>Create Auction</Link>
+                    <Link to="/create-auction" onClick={handleNav} className="font-bold">Create Auction</Link>
                   </li>
               )}
+              {token && ( // Conditionally render the button in mobile menu
+                  <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
+                    <Link to="/my-auction" onClick={handleNav} className="font-bold">My Auction</Link>
+                  </li>
+              )}
+              <li className="py-3 pl-3 hover:rounded hover:bg-black/50">
+                <Link to="/account" onClick={handleNav} className="font-bold">Account</Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -8,7 +8,6 @@ import SellCar from './pages/SellCar.jsx';
 import Community from './pages/Community.jsx';
 import Account from './pages/Account.jsx';
 import UserInfo from './pages/UserInfo.jsx';
-import OwnerAuctions from './pages/OwnerAuctions.jsx';
 import AuctionDetails from './pages/AuctionDetails.jsx';
 import Home from './pages/Home.jsx';
 import CreateAuction from './pages/CreateAuction.jsx';
@@ -32,7 +31,6 @@ function App() {
                         <Route path="/community" element={<Community />} />
                         <Route path="/account" element={<Account />} />
                         <Route path="/user-info" element={<ProtectedRoute><UserInfo /></ProtectedRoute>} />
-                        <Route path="/owner-auctions" element={<OwnerAuctions />} />
                         <Route path="/auction/:auctionId" element={<AuctionDetails />} />
                         <Route path="/create-auction" element={<CreateAuction />} />
                         <Route path="/update-auction/:id" element={<UpdateAuctions />} />
