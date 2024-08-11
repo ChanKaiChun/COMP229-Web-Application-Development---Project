@@ -3,9 +3,7 @@
 Built with React+Vite and Tailwindcss
 -
 How to start:
-- npm install
-- npm install -D tailwindcss
-- npm install axios
-- npm install react-router-dom
-- npm install -s dotnev
-- npm run dev
+- Navigate to Console
+- Run `npm install` on console
+- Run `npm run dev` to start the program
+- Visit the website on http://localhost:3000
