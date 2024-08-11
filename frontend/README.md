@@ -8,7 +8,7 @@ How to start:
 
 If it doesn't run
 toss these into the package.json
--{
+{
   "name": "frontend",
   "private": true,
   "version": "0.0.0",
