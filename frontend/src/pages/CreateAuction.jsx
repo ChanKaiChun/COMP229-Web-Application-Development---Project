@@ -60,7 +60,7 @@ const CreateAuction = () => {
     };
 
     return (
-        <div className="p-8 mt-16 bg-black text-white">
+        <div className="p-8 mt-16 bg-#1a202c text-white">
             <h1 className="text-4xl font-bold mb-4 text-orange-500">Create Auction</h1>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
                 <label>Car Model</label>

@@ -47,7 +47,7 @@ const LiveAuction = () => {
     };
 
     return (
-        <div className="p-8 mt-16 bg-black">
+        <div className="p-8 mt-16 bg-#1a202c">
             <h1 className="text-4xl font-bold mb-6 text-white">Live Auctions</h1>
             <div className="grid grid-cols-1 gap-6">
                 {auctions.map((auction, index) => (

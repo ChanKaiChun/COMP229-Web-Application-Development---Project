@@ -5,7 +5,6 @@ import LiveAuction from './pages/LiveAuction.jsx';
 import FeaturedAuctions from './pages/FeaturedAuctions.jsx';
 import PassResult from './pages/PassResult.jsx';
 import SellCar from './pages/SellCar.jsx';
-import Community from './pages/Community.jsx';
 import Account from './pages/Account.jsx';
 import UserInfo from './pages/UserInfo.jsx';
 import AuctionDetails from './pages/AuctionDetails.jsx';
@@ -28,7 +27,6 @@ function App() {
                         <Route path="/featured-auctions" element={<FeaturedAuctions />} />
                         <Route path="/pass-result" element={<PassResult />} />
                         <Route path="/sell-car" element={<SellCar />} />
-                        <Route path="/community" element={<Community />} />
                         <Route path="/account" element={<Account />} />
                         <Route path="/user-info" element={<ProtectedRoute><UserInfo /></ProtectedRoute>} />
                         <Route path="/auction/:auctionId" element={<AuctionDetails />} />

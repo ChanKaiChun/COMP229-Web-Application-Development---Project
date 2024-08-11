@@ -73,7 +73,6 @@ const AuctionDetails = () => {
                     <p className="mb-4">Car VIN: {auction.carVin}</p>
                     <p className="mb-4">Start Time: {new Date(auction.startTime).toLocaleString()}</p>
                     <p className="mb-4">End Time: {new Date(auction.endTime).toLocaleString()}</p>
-                    <p className="mb-4">Created Date: {new Date(auction.createdDate).toLocaleString()}</p>
 
                     {/*Owner Information*/}
                     <div className="mt-6">
