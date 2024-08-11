@@ -39,8 +39,8 @@ const AuctionDetails = () => {
         e.preventDefault();
         const min = auction.currentBid ? (auction.currentBid.amount + 1) : (auction.startPrice + 1);
         const bidValue = parseFloat(bidAmount);
-
-        if (bidValue > min) {
+        console.log(bidValue);
+        if (bidValue >= min) {
             axios.post('/api/bid', { auctionId, amount: bidValue }, config)
                 .then(() => {
                     window.location.reload();
